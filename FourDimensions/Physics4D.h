@@ -82,6 +82,11 @@ struct Tetrahedron : Visible
 	void Rotate(const Rotation rotation);
 };
 
+struct Updatable
+{
+	virtual void Update() = 0;
+};
+
 struct Mesh : Visible
 {
 	static const int id = 3;
@@ -99,7 +104,24 @@ private:
 	void UpdateTetrahedrons();
 };
 
-struct Cuboid4D : Mesh
+struct RotatingMesh : virtual Mesh, Updatable
+{
+	FPN rotationSpeedAround;
+	FPN rotationSpeedInside;
+	Vector4 vectorRotation1;
+	Vector4 vectorRotation2;
+	Rotation initialRotation;
+	const sf::Clock& clock;
+	RotatingMesh(Vector4 position, Rotation initialRotation, std::vector<Tetrahedron> tetrahedrons, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
+	void Update();
+};
+
+struct RotatingCuboid : Cuboid4D, RotatingMesh
+{
+	RotatingCuboid(Vector4 position, Rotation initialRotation, Vector4 sizes, const sf::Clock& clock, Colorization colorization, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
+};
+
+struct Cuboid4D : virtual Mesh
 {
 	Cuboid4D(Vector4 position, Rotation rotation, Vector4 sizes, Colorization colorization);
 private:

@@ -49,6 +49,12 @@
     <ClCompile Include="Cuboid4D.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
+    <ClCompile Include="RotatingCuboid.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="RotatingMesh.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">
