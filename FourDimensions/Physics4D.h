@@ -92,23 +92,13 @@ struct Mesh : Visible
 	Mesh();
 	Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
+	static Mesh GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
+	static Mesh GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization);
 private:
 	Vector4 position{};
 	Rotation rotation{};
 	std::vector<Tetrahedron> relativeTetrahedrons{};
 	void UpdateTetrahedrons();
-};
-
-struct Cuboid4D : Mesh
-{
-	Cuboid4D(Vector4 position, Rotation rotation, Vector4 sizes, Colorization colorization);
-private:
-	void ApplyExtraColorization(Colorization colorization);
-};
-
-struct Cube4D : Cuboid4D
-{
-	Cube4D(Vector4 position, Rotation roattion, FPN size, Colorization colorization);
 };
 
 enum class Sound

@@ -10,9 +10,6 @@
     <ClCompile Include="Rotation.cpp">
       <Filter>Linjear4D</Filter>
     </ClCompile>
-    <ClCompile Include="Cube4D.cpp">
-      <Filter>Physics4D</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
@@ -44,9 +41,6 @@
       <Filter>Other</Filter>
     </ClCompile>
     <ClCompile Include="VisiblesImage.cpp">
-      <Filter>Physics4D</Filter>
-    </ClCompile>
-    <ClCompile Include="Cuboid4D.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
   </ItemGroup>

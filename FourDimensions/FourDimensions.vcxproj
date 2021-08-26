@@ -99,8 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Colorization.cpp" />
-    <ClCompile Include="Cube4D.cpp" />
-    <ClCompile Include="Cuboid4D.cpp" />
     <ClCompile Include="Main.cpp">
       <FileType>Document</FileType>
     </ClCompile>
