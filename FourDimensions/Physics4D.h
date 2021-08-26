@@ -29,7 +29,6 @@ private:
 	Vector4 screenUp{ 0, 1, 0, 0 };
 	FPN cameraZoom = (FPN)0.5;
 };
-
 struct RayCastResult
 {
 	FPN distance;
@@ -37,12 +36,10 @@ struct RayCastResult
 	RayCastResult(FPN distance, sf::Color color);
 	bool Success();
 };
-
 enum class ColorSheme
 {
 	simple, dragedCubes, gradual
 };
-
 struct Colorization
 {
 	unsigned color1;
@@ -51,13 +48,11 @@ struct Colorization
 	Colorization(ColorSheme colorSheme, sf::Color color1, sf::Color color2);
 	Colorization(ColorSheme colorSheme, unsigned color1, unsigned color2);
 };
-
 struct Visible
 {
 	int id = -1;
 	Visible(int id);
 };
-
 struct Space3D : Visible
 {
 	Vector4 norm{ 0, 0, 0, 1 };
@@ -67,7 +62,6 @@ struct Space3D : Visible
 	Space3D(Vector4 norm, Vector4 position, sf::Color color);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 };
-
 struct Tetrahedron : Visible
 {
 	Vector4 position;
@@ -81,12 +75,10 @@ struct Tetrahedron : Visible
 	Tetrahedron GetRotated(const Rotation rotation) const;
 	void Rotate(const Rotation rotation);
 };
-
 struct Updatable
 {
 	virtual void Update() = 0;
 };
-
 struct Mesh : Visible
 {
 	static const int id = 3;
@@ -108,7 +100,6 @@ private:
 	std::vector<Tetrahedron> relativeTetrahedrons{};
 	void UpdateTetrahedrons();
 };
-
 struct RotatingMesh : Mesh, Updatable
 {
 	FPN rotationSpeedAround;
@@ -121,12 +112,10 @@ struct RotatingMesh : Mesh, Updatable
 	RotatingMesh(Mesh mesh, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
 	void Update();
 };
-
 enum class Sound
 {
 	Jump, Landing
 };
-
 struct SoundController
 {
 public:
@@ -140,7 +129,6 @@ private:
 	static unsigned const maxSounds = 256; //Max amount of sounds played at once. May be different on different OS.
 	sf::Sound currentSounds[maxSounds];
 };
-
 struct VisiblesImage
 {
 	std::vector<Visible*> visibles;
