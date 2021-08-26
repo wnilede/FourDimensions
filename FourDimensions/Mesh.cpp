@@ -22,6 +22,18 @@ void Mesh::setRotation(Rotation value)
 	rotation = value;
 	UpdateTetrahedrons();
 }
+const Vector4& Mesh::getPosition()
+{
+	return position;
+}
+const Rotation& Mesh::getRotation()
+{
+	return rotation;
+}
+const std::vector<Tetrahedron>& Mesh::getTetrahedrons()
+{
+	return relativeTetrahedrons;
+}
 FPN Mesh::RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const
 {
 	FPN minimalDistance = std::numeric_limits<FPN>().infinity();

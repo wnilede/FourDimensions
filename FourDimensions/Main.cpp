@@ -46,6 +46,16 @@ int main()
         Rotation{ Vector4{ 1, 0, 0, 0}, Vector4{ 0, 1, 0, 0 }, (FPN)constants::pi / 4 },
         Vector4{ 3, 3, 3, 10 }, Colorization{ ColorSheme::dragedCubes, sf::Color(0, 50, 200), sf::Color::Red });
     world.visibles.push_back(&longRamp);
+    RotatingMesh rotatingCuboid{
+        Mesh::GetCuboid(Vector4{ -10, 0, 0, 1 }, Rotation{ }, Vector4{ 1, 5, 1, 1 }, Colorization{ ColorSheme::gradual, 0xA04FB4FFu, 0x7DD801FF }),
+        world.lifetimeClock, Vector4{ 1, 0, 0, 0 }, Vector4{ 0, 0, 0, 1 }, (FPN)constants::pi / 4 };
+    world.visibles.push_back(&rotatingCuboid);
+    world.updatables.push_back(&rotatingCuboid);
+    RotatingMesh rotatingCuboid2{
+        Mesh::GetCuboid(Vector4{ 0, -10, 0, 3 }, Rotation{ }, Vector4{ 1, 5, 1, 1 }, Colorization{ ColorSheme::gradual, 0xA04FB4FFu, 0x7DD801FF }),
+        world.lifetimeClock, Vector4{ 1, 0, 0, 0 }, Vector4{ 0, 0, 1, 0 }, (FPN)constants::pi / 4 };
+    world.visibles.push_back(&rotatingCuboid2);
+    world.updatables.push_back(&rotatingCuboid2);
 
     world.Run();
     return 0;

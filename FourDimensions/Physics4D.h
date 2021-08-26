@@ -82,13 +82,21 @@ struct Tetrahedron : Visible
 	void Rotate(const Rotation rotation);
 };
 
+struct Updatable
+{
+	virtual void Update() = 0;
+};
+
 struct Mesh : Visible
 {
 	static const int id = 3;
-	std::vector<Tetrahedron> tetrahedrons{};
+	std::vector<Tetrahedron> tetrahedrons{}; //Make more protected?
 	void setPosition(Vector4 value);
 	void setRotation(Rotation value);
 	void setTetrahedrons(std::vector<Tetrahedron> tetrahedrons);
+	const Vector4& getPosition();
+	const Rotation& getRotation();
+	const std::vector<Tetrahedron>& getTetrahedrons();
 	Mesh();
 	Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
@@ -99,6 +107,19 @@ private:
 	Rotation rotation{};
 	std::vector<Tetrahedron> relativeTetrahedrons{};
 	void UpdateTetrahedrons();
+};
+
+struct RotatingMesh : Mesh, Updatable
+{
+	FPN rotationSpeedAround;
+	FPN rotationSpeedInside;
+	Vector4 vectorRotation1;
+	Vector4 vectorRotation2;
+	Rotation initialRotation;
+	const sf::Clock& clock;
+	RotatingMesh(Vector4 position, Rotation initialRotation, std::vector<Tetrahedron> tetrahedrons, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
+	RotatingMesh(Mesh mesh, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
+	void Update();
 };
 
 enum class Sound

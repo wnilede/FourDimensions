@@ -64,6 +64,10 @@ void World::UpdatePhysics()
         }
     }
 
+    for (Updatable* updatable : updatables) {
+        updatable->Update();
+    }
+
 
 
     //NEW PLAN FOR PHYSICS UPDATE FOR PLAYER:

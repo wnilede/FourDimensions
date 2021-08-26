@@ -9,10 +9,12 @@ struct World
 public:
 	Player player{};
 	std::vector<Visible*> visibles{};
+	std::vector<Updatable*> updatables{};
 	const FPN mouseScrollSensitivity;
 	const FPN mouseMoveSensitivity;
 	FPN gravitationalAcceleration;
 	const sf::Time targetUpdateInterval = sf::seconds(1 / (FPN)60);
+	const sf::Clock lifetimeClock;
 	World();
 	bool IsOpen();
 	void Run();

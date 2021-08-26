@@ -106,6 +106,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RayCastResult.cpp" />
+    <ClCompile Include="RotatingMesh.cpp" />
     <ClCompile Include="Rotation.cpp" />
     <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Space3D.cpp" />
