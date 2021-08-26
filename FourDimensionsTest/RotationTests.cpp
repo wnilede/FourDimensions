@@ -43,6 +43,10 @@ namespace TestFourDimensions
 			Rotation rotation{ Vector4{2, 0, 3, -1}, Vector4{2, -5, -1, -1}, (FPN)constants::pi, (FPN)constants::pi };
 			Comparers::AssertAlmostSame(Vector4{ -1, 2, -2, (FPN)0.2 }, Vector4{ 1, -2, 2, (FPN)-0.2 }.GetRotated(rotation));
 		}
+		TEST_METHOD(Plus)
+		{
+			Comparers::AssertAlmostSame(Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 7 }, Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 2 } + Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 5 });
+		}
 		TEST_METHOD(Minus)
 		{
 			Comparers::AssertAlmostSame(Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 2 }, Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 7 } - Rotation{ Vector4{ 0, 2, 3, -4}, Vector4{ -1, 2, -1, 3}, 5 });
