@@ -361,3 +361,17 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# sfml-files that for some reason needs to be in their folders
+!/x64/
+!/x64/Debug/openal32.dll
+!/x64/Release/openal32.dll
+!/x64/Debug/sfml-audio-d-2.dll
+!/x64/Release/sfml-audio-2.dll
+!/x64/Debug/sfml-graphics-d-2.dll
+!/x64/Release/sfml-graphics-2.dll
+!/x64/Debug/sfml-network-d-2.dll
+!/x64/Release/sfml-network-2.dll
+!/x64/Debug/sfml-window-d-2.dll
+!/x64/Release/sfml-window-2.dll
