@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Matrix4.cpp">
+      <Filter>Linjear4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4.cpp">
+      <Filter>Linjear4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotation.cpp">
+      <Filter>Linjear4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube4D.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Space3D.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Tetrahedron.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Visible.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundController.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="RayCastResult.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Colorization.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Other</Filter>
+    </ClCompile>
+    <ClCompile Include="VisiblesImage.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+    <ClCompile Include="Cuboid4D.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Physics4D.h">
+      <Filter>Physics4D</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Physics4D</Filter>
+    </ClInclude>
+    <ClInclude Include="RayCasting.cuh">
+      <Filter>Physics4D</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Linjear4D.h">
+      <Filter>Linjear4D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Linjear4D">
+      <UniqueIdentifier>{d850ca3a-25f9-4363-92b7-e888b08dd1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics4D">
+      <UniqueIdentifier>{f943a542-db41-4df2-bbc8-f2e724f70e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{979f3d78-05a8-439e-85fe-c4e74d6d7d68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="RayCasting.cu">
+      <Filter>Physics4D</Filter>
+    </CudaCompile>
+  </ItemGroup>
+</Project>
