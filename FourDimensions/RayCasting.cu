@@ -37,7 +37,7 @@ void RayCaster::RayCastScreen()
 				thrust::make_zip_function(RayCasterTetrahedronFunctor(pVisiblesImage->player, *static_cast<const Tetrahedron*>(visible), height, width)));
 			break;
 		case Mesh::id:
-			for (Tetrahedron tetrahedron : static_cast<const Mesh*>(visible)->tetrahedrons)
+			for (Tetrahedron tetrahedron : static_cast<const Mesh*>(visible)->absoluteTetrahedrons)
 			{
 				thrust::for_each(
 					thrust::make_zip_iterator(pixelIndex, distance.begin(), color.begin()),

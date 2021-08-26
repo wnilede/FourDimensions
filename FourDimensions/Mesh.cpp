@@ -1,12 +1,18 @@
 #include "Physics4D.h"
 
-Mesh::Mesh() : Visible(id)
+Mesh::Mesh() : Visible(id), absoluteTetrahedrons(changeableAbsoluteTetrahedrons)
 { }
 Mesh::Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons) :
-	Visible(id), position(position), rotation(rotation), relativeTetrahedrons(tetrahedrons)
+	Visible(id), position(position), rotation(rotation), relativeTetrahedrons(tetrahedrons), absoluteTetrahedrons(changeableAbsoluteTetrahedrons)
 {
 	UpdateTetrahedrons();
 }
+Mesh::Mesh(const Mesh& other) : Visible(id),
+position(other.position), rotation(other.rotation), relativeTetrahedrons(other.relativeTetrahedrons), changeableAbsoluteTetrahedrons(other.changeableAbsoluteTetrahedrons), absoluteTetrahedrons(changeableAbsoluteTetrahedrons)
+{ }
+Mesh::Mesh(const Mesh&& other) noexcept : Visible(id),
+position(other.position), rotation(other.rotation), relativeTetrahedrons(other.relativeTetrahedrons), changeableAbsoluteTetrahedrons(other.changeableAbsoluteTetrahedrons), absoluteTetrahedrons(changeableAbsoluteTetrahedrons)
+{ }
 void Mesh::setTetrahedrons(std::vector<Tetrahedron> value)
 {
 	this->relativeTetrahedrons = value;
@@ -37,7 +43,7 @@ const std::vector<Tetrahedron>& Mesh::getTetrahedrons()
 FPN Mesh::RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const
 {
 	FPN minimalDistance = std::numeric_limits<FPN>().infinity();
-	for (const Tetrahedron& tetrahedron : tetrahedrons)
+	for (const Tetrahedron& tetrahedron : absoluteTetrahedrons)
 	{
 		FPN distance = tetrahedron.RayCast(RayOrigin, RayDirection);
 		if (distance > 0 && distance < minimalDistance)
@@ -47,11 +53,11 @@ FPN Mesh::RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const
 }
 void Mesh::UpdateTetrahedrons()
 {
-	tetrahedrons = relativeTetrahedrons;
+	changeableAbsoluteTetrahedrons = relativeTetrahedrons;
 	for (int i = 0; i < relativeTetrahedrons.size(); i++)
 	{
-		this->tetrahedrons[i].Rotate(rotation);
-		this->tetrahedrons[i].position += position;
+		this->changeableAbsoluteTetrahedrons[i].Rotate(rotation);
+		this->changeableAbsoluteTetrahedrons[i].position += position;
 	}
 }
 Mesh Mesh::GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization)

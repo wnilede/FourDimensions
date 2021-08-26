@@ -81,8 +81,15 @@ struct Updatable
 };
 struct Mesh : Visible
 {
+private:
+	Vector4 position{};
+	Rotation rotation{};
+	std::vector<Tetrahedron> relativeTetrahedrons{};
+	std::vector<Tetrahedron> changeableAbsoluteTetrahedrons;
+	void UpdateTetrahedrons();
+public:
 	static const int id = 3;
-	std::vector<Tetrahedron> tetrahedrons{}; //Make more protected?
+	const std::vector<Tetrahedron>& absoluteTetrahedrons;
 	void setPosition(Vector4 value);
 	void setRotation(Rotation value);
 	void setTetrahedrons(std::vector<Tetrahedron> tetrahedrons);
@@ -91,14 +98,11 @@ struct Mesh : Visible
 	const std::vector<Tetrahedron>& getTetrahedrons();
 	Mesh();
 	Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons);
+	Mesh(const Mesh& other);
+	Mesh(const Mesh&& other) noexcept;
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 	static Mesh GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
 	static Mesh GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization);
-private:
-	Vector4 position{};
-	Rotation rotation{};
-	std::vector<Tetrahedron> relativeTetrahedrons{};
-	void UpdateTetrahedrons();
 };
 struct RotatingMesh : Mesh, Updatable
 {
