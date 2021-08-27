@@ -184,6 +184,7 @@ void World::StartDrawLoop()
 void World::Run()
 {
     window.setActive(false);
+    physicsClock.restart();
     std::thread drawThread = std::thread([this] {
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
         SetThreadDescription(GetCurrentThread(), L"Graphics Thread");

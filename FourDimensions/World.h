@@ -14,7 +14,7 @@ public:
 	const FPN mouseMoveSensitivity;
 	FPN gravitationalAcceleration;
 	const sf::Time targetUpdateInterval = sf::seconds(1 / (FPN)60);
-	const sf::Clock lifetimeClock;
+	sf::Clock lifetimeClock;
 	World();
 	bool IsOpen();
 	void Run();
@@ -35,5 +35,4 @@ private:
 	void StartDrawLoop();
 	void StartPhysicsLoop();
 	void UpdatePhysics();
-	void Draw();
 };
