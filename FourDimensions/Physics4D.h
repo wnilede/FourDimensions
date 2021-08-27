@@ -45,6 +45,8 @@ struct Colorization
 	unsigned color1;
 	unsigned color2;
 	ColorSheme colorScheme;
+	Colorization(sf::Color color);
+	Colorization(unsigned color);
 	Colorization(ColorSheme colorSheme, sf::Color color1, sf::Color color2);
 	Colorization(ColorSheme colorSheme, unsigned color1, unsigned color2);
 };
