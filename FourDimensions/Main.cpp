@@ -56,6 +56,20 @@ int main()
         world.lifetimeClock, Vector4{ 1, 0, 0, 0 }, Vector4{ 0, 0, 1, 0 }, (FPN)constants::pi / 4 };
     world.visibles.push_back(&rotatingCuboid2);
     world.updatables.push_back(&rotatingCuboid2);
+    std::vector<Vector4> path;
+    path.push_back(Vector4(2, 3, 2, 1));
+    path.push_back(Vector4(2, 3, -2, 1));
+    path.push_back(Vector4(-2, 3, -2, 1));
+    path.push_back(Vector4(-2, 3, 2, 1));
+    MovingMesh movingMesh{ Mesh::GetCube(Vector4{ }, Rotation{ }, 1, Colorization{ sf::Color::Yellow }), world.lifetimeClock, path, 1 };
+    world.visibles.push_back(&movingMesh);
+    world.updatables.push_back(&movingMesh);
+    std::vector<Vector4> path2;
+    path2.push_back(Vector4(5, 8, -6, -2));
+    path2.push_back(Vector4(5, 8, -6, 18));
+    MovingMesh elevator{ Mesh::GetCube(Vector4{ }, Rotation{ }, (FPN)2, Colorization{ sf::Color::Yellow }), world.lifetimeClock, path2, 2 };
+    world.visibles.push_back(&elevator);
+    world.updatables.push_back(&elevator);
 
     world.Run();
     return 0;

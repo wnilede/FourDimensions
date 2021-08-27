@@ -116,7 +116,18 @@ struct RotatingMesh : Mesh, Updatable
 	const sf::Clock& clock;
 	RotatingMesh(Vector4 position, Rotation initialRotation, std::vector<Tetrahedron> tetrahedrons, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
 	RotatingMesh(Mesh mesh, const sf::Clock& clock, Vector4 vectorRotation1, Vector4 vectorRotation2, FPN rotationSpeedAround, FPN rotationSpeedInside = 0);
-	void Update();
+	void Update() override;
+};
+struct MovingMesh : Mesh, Updatable
+{
+	const std::vector<Vector4> pathCorners;
+	const FPN speed;
+	const FPN pathLength;
+	const sf::Clock& clock;
+	MovingMesh(Mesh mesh, const sf::Clock& clock, std::vector<Vector4> pathCorners, FPN speed);
+	void Update() override;
+private:
+	static FPN GetPathLength(const std::vector<Vector4>& pathCorners);
 };
 enum class Sound
 {

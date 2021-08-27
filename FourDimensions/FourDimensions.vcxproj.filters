@@ -46,6 +46,7 @@
     <ClCompile Include="RotatingMesh.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
+    <ClCompile Include="MovingMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">

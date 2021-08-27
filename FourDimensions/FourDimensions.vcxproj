@@ -104,6 +104,7 @@
     </ClCompile>
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MovingMesh.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RayCastResult.cpp" />
     <ClCompile Include="RotatingMesh.cpp" />
