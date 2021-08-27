@@ -15,16 +15,16 @@ public:
 	FPN gravitationalAcceleration;
 	const sf::Time targetUpdateInterval = sf::seconds(1 / (FPN)60);
 	sf::Clock lifetimeClock;
+	std::atomic<bool> closing = false;
 	World();
-	bool IsOpen();
-	void Run();
+	World(World& other) = delete;
+	World(World&& other) = delete;
+	void Run(sf::RenderWindow& window);
 protected:
 	void SetGoalPosition(Vector4 position);
 private:
 	std::atomic<bool> lockTest = false;
 
-	std::atomic<bool> closing = false;
-	sf::RenderWindow window;
 	SoundController soundController;
 	sf::Font font;
 	sf::Text text;
@@ -33,11 +33,10 @@ private:
 	sf::Time fps;
 	sf::Time ups;
 	std::mutex visiblesPlayerUpsMutex;
-	RayCaster rayCaster;
 	RotatingMesh goal;
-	void StartDrawLoop();
-	void StartPhysicsLoop();
-	void UpdatePhysics();
+	void StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster);
+	void StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster);
+	void UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster);
 };
 struct TestingWorld : World
 {

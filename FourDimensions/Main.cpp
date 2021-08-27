@@ -12,6 +12,7 @@
 int main()
 {
     TestingWorld world{ };
-    world.Run();
+    sf::RenderWindow window(sf::VideoMode(1200, 1000), "4D-game", sf::Style::Titlebar | sf::Style::Close);
+    world.Run(window);
     return 0;
 }

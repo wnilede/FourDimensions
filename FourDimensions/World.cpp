@@ -3,9 +3,6 @@
 #include <windows.h>
 #include <processthreadsapi.h>
 
-#define SCREEN_HEIGHT 1000
-#define SCREEN_WIDTH 1200
-
 #include "World.h"
 
 //Should not be needed to define FPN since Linjear4D.h is included indirectly, but IntelliSense requires it.
@@ -14,9 +11,7 @@
 #endif
 
 World::World() :
-    window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "4D-game", sf::Style::Titlebar | sf::Style::Close),
     mouseScrollSensitivity((FPN)0.01), mouseMoveSensitivity((FPN)0.005), gravitationalAcceleration((FPN)constants::standardGravity), soundController{},
-    rayCaster(window, player, visibles, visiblesPlayerUpsMutex, SCREEN_HEIGHT, SCREEN_WIDTH, lockTest),
     goal(Mesh::GetCube(Vector4(), Rotation(), 1, Colorization(ColorSheme::dragedCubes, 0xFFFFFFFF, 0x000000FF)), lifetimeClock, Vector4(1, 1, 0, 0), Vector4(0, 0, 1, 1), (FPN)constants::pi / 4, 1)
 {
     if (!font.loadFromFile("verdana.ttf")) {
@@ -32,7 +27,7 @@ void World::SetGoalPosition(Vector4 position)
 {
     goal.setPosition(position);
 }
-void World::UpdatePhysics()
+void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     std::scoped_lock lock{ visiblesPlayerUpsMutex };
 
@@ -43,7 +38,7 @@ void World::UpdatePhysics()
     sf::Time elapsedTime = physicsClock.restart();
     ups = elapsedTime;//(elapsedTime + ups) / (float)2;
     FPN mouseScroll = 0;
-    const sf::Vector2i centerOfScreen = sf::Vector2i(SCREEN_HEIGHT / 2, SCREEN_WIDTH / 2);
+    const sf::Vector2i centerOfScreen = sf::Vector2i(window.getSize().y / 2, window.getSize().x / 2);
     const sf::Vector2i mouseMovement = sf::Mouse::getPosition(window) - centerOfScreen;
     if (window.hasFocus()) {
         sf::Mouse::setPosition(centerOfScreen, window);
@@ -141,15 +136,11 @@ void World::UpdatePhysics()
 
     lockTest.store(false);
 }
-bool World::IsOpen()
-{
-    return window.isOpen() && !closing;
-}
-void World::StartPhysicsLoop()
+void World::StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     std::chrono::steady_clock::time_point lastUpdate = std::chrono::steady_clock::now();
     physicsClock.restart();
-    while (IsOpen())
+    while (window.isOpen() && !closing)
     {
         //Sleep(max((targetUpdateInterval - physicsClock.getElapsedTime()).asMilliseconds(), 0));
         //std::this_thread::sleep_for(std::chrono::microseconds(max(((targetUpdateInterval - physicsClock.getElapsedTime()) * (float)0.7).asMicroseconds(), 0))); //Sleeps for some random amount of time perhaps close to the wanted one.
@@ -158,10 +149,10 @@ void World::StartPhysicsLoop()
         //std::this_thread::sleep_until(lastUpdate + std::chrono::microseconds(targetUpdateInterval.asMicroseconds()) * 0.7);
         sf::sleep(targetUpdateInterval - physicsClock.getElapsedTime());
         lastUpdate = std::chrono::steady_clock::now();
-        UpdatePhysics();
+        UpdatePhysics(window, rayCaster);
     }
 }
-void World::StartDrawLoop()
+void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     while (window.isOpen())
     {
@@ -188,18 +179,20 @@ void World::StartDrawLoop()
             window.close();
     }
 }
-void World::Run()
+void World::Run(sf::RenderWindow& window)
 {
+    RayCaster rayCaster{ window, player, visibles, visiblesPlayerUpsMutex, window.getSize().y, window.getSize().x, lockTest };
+
     window.setMouseCursorGrabbed(true);
     window.setMouseCursorVisible(false);
 
     window.setActive(false);
     physicsClock.restart();
-    std::thread drawThread = std::thread([this] {
+    std::thread drawThread = std::thread([this, &window, &rayCaster] {
         SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
         SetThreadDescription(GetCurrentThread(), L"Graphics Thread");
-        this->StartDrawLoop();
+        this->StartDrawLoop(window, rayCaster);
     });
-    StartPhysicsLoop();
+    StartPhysicsLoop(window, rayCaster);
     drawThread.join();
 }
