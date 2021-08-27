@@ -15,10 +15,9 @@
 
 World::World() :
     window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "4D-game", sf::Style::Titlebar | sf::Style::Close),
-    mouseScrollSensitivity((FPN)0.01), mouseMoveSensitivity((FPN)0.005),
-    gravitationalAcceleration((FPN)constants::standardGravity),
-    soundController{},
-    rayCaster(window, player, visibles, visiblesPlayerUpsMutex, SCREEN_HEIGHT, SCREEN_WIDTH, lockTest)
+    mouseScrollSensitivity((FPN)0.01), mouseMoveSensitivity((FPN)0.005), gravitationalAcceleration((FPN)constants::standardGravity), soundController{},
+    rayCaster(window, player, visibles, visiblesPlayerUpsMutex, SCREEN_HEIGHT, SCREEN_WIDTH, lockTest),
+    goal(Mesh::GetCube(Vector4(), Rotation(), 1, Colorization(ColorSheme::dragedCubes, 0xFFFFFFFF, 0x000000FF)), lifetimeClock, Vector4(1, 1, 0, 0), Vector4(0, 0, 1, 1), (FPN)constants::pi / 4, 1)
 {
     if (!font.loadFromFile("verdana.ttf")) {
         std::cout << "No font file found." << std::endl;
@@ -26,8 +25,12 @@ World::World() :
     text.setCharacterSize(16);
     text.setFillColor(sf::Color::White);
 
-    window.setMouseCursorGrabbed(true);
-    window.setMouseCursorVisible(false);
+    visibles.push_back(&goal);
+    updatables.push_back(&goal);
+}
+void World::SetGoalPosition(Vector4 position)
+{
+    goal.setPosition(position);
 }
 void World::UpdatePhysics()
 {
@@ -127,6 +130,10 @@ void World::UpdatePhysics()
         }
     }
 
+    if ((goal.getPosition() - player.position).GetLength() < 3) {
+        closing = true;
+    }
+
     player.HandleViewControlls(
         mouseMovement.x * mouseMoveSensitivity,
         -mouseMovement.y * mouseMoveSensitivity,
@@ -183,6 +190,9 @@ void World::StartDrawLoop()
 }
 void World::Run()
 {
+    window.setMouseCursorGrabbed(true);
+    window.setMouseCursorVisible(false);
+
     window.setActive(false);
     physicsClock.restart();
     std::thread drawThread = std::thread([this] {

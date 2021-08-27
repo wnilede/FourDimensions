@@ -18,6 +18,8 @@ public:
 	World();
 	bool IsOpen();
 	void Run();
+protected:
+	void SetGoalPosition(Vector4 position);
 private:
 	std::atomic<bool> lockTest = false;
 
@@ -32,6 +34,7 @@ private:
 	sf::Time ups;
 	std::mutex visiblesPlayerUpsMutex;
 	RayCaster rayCaster;
+	RotatingMesh goal;
 	void StartDrawLoop();
 	void StartPhysicsLoop();
 	void UpdatePhysics();

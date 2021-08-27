@@ -33,4 +33,5 @@ TestingWorld::TestingWorld()
     elevator.SetPathCorners(path2);
     visibles.push_back(&elevator);
     updatables.push_back(&elevator);
+    SetGoalPosition(Vector4(10, 10, 10, 1));
 }
