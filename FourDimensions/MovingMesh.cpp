@@ -20,8 +20,10 @@ void MovingMesh::Update()
 }
 void MovingMesh::SetPathCorners(std::vector<Vector4> value)
 {
-	pathLength = GetPathLength(pathCorners);
-	pathCorners = pathCorners;
+	if (value.size() == 0)
+		throw std::invalid_argument("Cannot set a path with zero corners");
+	pathLength = GetPathLength(value);
+	pathCorners = value;
 }
 const std::vector<Vector4>& MovingMesh::GetPathCorners() const
 {

@@ -102,7 +102,7 @@ public:
 	Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons);
 	Mesh(const Mesh& other);
 	Mesh(const Mesh&& other) noexcept;
-	Mesh operator=(const Mesh& other);
+	void operator=(const Mesh& other);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 	static Mesh GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
 	static Mesh GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization);

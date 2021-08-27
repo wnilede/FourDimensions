@@ -111,6 +111,7 @@
     <ClCompile Include="Rotation.cpp" />
     <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Space3D.cpp" />
+    <ClCompile Include="TestingWorld.cpp" />
     <ClCompile Include="Tetrahedron.cpp" />
     <ClCompile Include="Vector4.cpp" />
     <ClCompile Include="Visible.cpp" />

@@ -47,6 +47,9 @@
       <Filter>Physics4D</Filter>
     </ClCompile>
     <ClCompile Include="MovingMesh.cpp" />
+    <ClCompile Include="TestingWorld.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">

@@ -13,6 +13,13 @@ position(other.position), rotation(other.rotation), relativeTetrahedrons(other.r
 Mesh::Mesh(const Mesh&& other) noexcept : Visible(id),
 position(other.position), rotation(other.rotation), relativeTetrahedrons(other.relativeTetrahedrons), changeableAbsoluteTetrahedrons(other.changeableAbsoluteTetrahedrons), absoluteTetrahedrons(changeableAbsoluteTetrahedrons)
 { }
+void Mesh::operator=(const Mesh& other)
+{
+	position = other.position;
+	rotation = other.rotation;
+	relativeTetrahedrons = other.relativeTetrahedrons;
+	changeableAbsoluteTetrahedrons = other.changeableAbsoluteTetrahedrons;
+}
 void Mesh::setTetrahedrons(std::vector<Tetrahedron> value)
 {
 	this->relativeTetrahedrons = value;
