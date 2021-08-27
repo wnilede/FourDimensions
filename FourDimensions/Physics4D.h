@@ -102,6 +102,7 @@ public:
 	Mesh(Vector4 position, Rotation rotation, std::vector<Tetrahedron> tetrahedrons);
 	Mesh(const Mesh& other);
 	Mesh(const Mesh&& other) noexcept;
+	Mesh operator=(const Mesh& other);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 	static Mesh GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
 	static Mesh GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization);
@@ -120,13 +121,19 @@ struct RotatingMesh : Mesh, Updatable
 };
 struct MovingMesh : Mesh, Updatable
 {
-	const std::vector<Vector4> pathCorners;
 	const FPN speed;
-	const FPN pathLength;
 	const sf::Clock& clock;
+	MovingMesh(Mesh mesh, const sf::Clock& clock, FPN speed);
 	MovingMesh(Mesh mesh, const sf::Clock& clock, std::vector<Vector4> pathCorners, FPN speed);
+	MovingMesh(const MovingMesh& other) = delete;
+	MovingMesh(const MovingMesh&& other) = delete;
+	void SetPathCorners(std::vector<Vector4> value);
+	const std::vector<Vector4>& GetPathCorners() const;
+	const FPN& GetPathLength() const;
 	void Update() override;
 private:
+	std::vector<Vector4> pathCorners;
+	FPN pathLength;
 	static FPN GetPathLength(const std::vector<Vector4>& pathCorners);
 };
 enum class Sound

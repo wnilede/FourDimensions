@@ -1,5 +1,7 @@
 #include "Physics4D.h"
 
+MovingMesh::MovingMesh(Mesh mesh, const sf::Clock& clock, FPN speed) : MovingMesh(mesh, clock, std::vector<Vector4>{ }, speed)
+{ }
 MovingMesh::MovingMesh(Mesh mesh, const sf::Clock& clock, std::vector<Vector4> pathCorners, FPN speed) : Mesh(mesh), clock(clock), pathCorners(pathCorners), speed(speed), pathLength(GetPathLength(pathCorners))
 {
 	if (speed < 0)
@@ -16,15 +18,27 @@ void MovingMesh::Update()
 	}
 	setPosition(pathCorners[part % pathCorners.size()] + distance * (pathCorners[part % pathCorners.size()] - pathCorners[(part - 1) % pathCorners.size()]).GetNormalized());
 }
+void MovingMesh::SetPathCorners(std::vector<Vector4> value)
+{
+	pathLength = GetPathLength(pathCorners);
+	pathCorners = pathCorners;
+}
+const std::vector<Vector4>& MovingMesh::GetPathCorners() const
+{
+	return pathCorners;
+}
+const FPN& MovingMesh::GetPathLength() const
+{
+	return pathLength;
+}
 FPN MovingMesh::GetPathLength(const std::vector<Vector4>& pathCorners)
 {
-	if (pathCorners.size() < 2)
-		throw std::invalid_argument("Path must contain at least 2 corners"); //Could fix if needed
 	FPN length = 0;
-	for (unsigned i = 1; i < pathCorners.size(); i++)
-	{
+	for (unsigned i = 1; i < pathCorners.size(); i++) {
 		length += (pathCorners[i] - pathCorners[i - 1]).GetLength();
 	}
-	length += (pathCorners[0] - pathCorners[pathCorners.size() - 1]).GetLength();
+	if (pathCorners.size() > 1) {
+		length += (pathCorners[0] - pathCorners[pathCorners.size() - 1]).GetLength();
+	}
 	return length;
 }
