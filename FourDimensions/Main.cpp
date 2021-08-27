@@ -28,7 +28,7 @@ int main()
     //world.visibles.push_back(&tetrahedron3);
     Tetrahedron parallelepepid{ Vector4(2, 0, 0, 2), Vector4(3, 0, 0, 2), Vector4(2, 1, 0, 2), Vector4(2, 0, 1, 2), Colorization(ColorSheme::simple, sf::Color::Cyan, sf::Color::Cyan), true };
     //world.visibles.push_back(&parallelepepid);
-    Mesh cube4D = Mesh::GetCube(Vector4(0, 3, 0, 1), Rotation{}, 1, Colorization(ColorSheme::dragedCubes, sf::Color(100, 100, 100), sf::Color(150, 150, 150)));
+    Mesh cube4D = Mesh::GetCube(Vector4(0, 3, 0, 1), Rotation{}, 1, Colorization(ColorSheme::rough, sf::Color(160, 160, 160), sf::Color(150, 150, 150)));
     world.visibles.push_back(&cube4D);
     Mesh cube4D2 = Mesh::GetCube(Vector4(0, 6, 0, 0),
         Rotation{ Vector4{ 0, 0, 0, 1 }, Vector4{ 0, 1, 0, 0 }, (FPN)constants::pi / 4 },
@@ -47,7 +47,7 @@ int main()
         Vector4{ 3, 3, 3, 10 }, Colorization{ ColorSheme::dragedCubes, sf::Color(0, 50, 200), sf::Color::Red });
     world.visibles.push_back(&longRamp);
     RotatingMesh rotatingCuboid{
-        Mesh::GetCuboid(Vector4{ -10, 0, 0, 1 }, Rotation{ }, Vector4{ 1, 5, 1, 1 }, Colorization{ ColorSheme::gradual, 0xA04FB4FFu, 0x7DD801FF }),
+        Mesh::GetCuboid(Vector4{ -10, 0, 0, 1 }, Rotation{ }, Vector4{ 1, 5, 1, 1 }, Colorization{ ColorSheme::rough, 0xA04FB4FFu, 0x7DD801FF }),
         world.lifetimeClock, Vector4{ 1, 0, 0, 0 }, Vector4{ 0, 0, 0, 1 }, (FPN)constants::pi / 4 };
     world.visibles.push_back(&rotatingCuboid);
     world.updatables.push_back(&rotatingCuboid);
@@ -67,7 +67,7 @@ int main()
     std::vector<Vector4> path2;
     path2.push_back(Vector4(5, 8, -6, -2));
     path2.push_back(Vector4(5, 8, -6, 18));
-    MovingMesh elevator{ Mesh::GetCube(Vector4{ }, Rotation{ }, (FPN)2, Colorization{ sf::Color::Yellow }), world.lifetimeClock, path2, 2 };
+    MovingMesh elevator{ Mesh::GetCube(Vector4{ }, Rotation{ }, (FPN)2, Colorization{ ColorSheme::rough, 0x000000FFu, 0x808080FF }), world.lifetimeClock, path2, 2 };
     world.visibles.push_back(&elevator);
     world.updatables.push_back(&elevator);
 

@@ -254,6 +254,7 @@ void RayCasterTetrahedronFunctor::operator()(const unsigned& i, FPN& distance, u
 		}
 	}
 
+	//The an are how many of the vectors are needed from the tetrahedron position to get to the hit point
 	FPN a1 = result[0];
 	FPN a2 = result[1];
 	FPN a3 = result[2];
@@ -266,6 +267,11 @@ void RayCasterTetrahedronFunctor::operator()(const unsigned& i, FPN& distance, u
 		tetrahedron.actuallyParallelepiped && a1 <= 1 && a2 <= 1 && a3 <= 1))
 	{
 		distance = currentDistance;
+		FPN colorDistribution = -1;
+		//The bn are how far into the axis they are, compared to the an which are ratios
+		const FPN b1 = a1 * sqrt(tetrahedron.corners[0].X * tetrahedron.corners[0].X + tetrahedron.corners[0].Y * tetrahedron.corners[0].Y + tetrahedron.corners[0].Z * tetrahedron.corners[0].Z + tetrahedron.corners[0].W * tetrahedron.corners[0].W);
+		const FPN b2 = a2 * sqrt(tetrahedron.corners[1].X * tetrahedron.corners[1].X + tetrahedron.corners[1].Y * tetrahedron.corners[1].Y + tetrahedron.corners[1].Z * tetrahedron.corners[1].Z + tetrahedron.corners[1].W * tetrahedron.corners[1].W);
+		const FPN b3 = a3 * sqrt(tetrahedron.corners[2].X * tetrahedron.corners[2].X + tetrahedron.corners[2].Y * tetrahedron.corners[2].Y + tetrahedron.corners[2].Z * tetrahedron.corners[2].Z + tetrahedron.corners[2].W * tetrahedron.corners[2].W);
 		switch (tetrahedron.colorization.colorScheme)
 		{
 		case ColorSheme::simple:
@@ -278,19 +284,24 @@ void RayCasterTetrahedronFunctor::operator()(const unsigned& i, FPN& distance, u
 				color = tetrahedron.colorization.color2;
 			break;
 		case ColorSheme::gradual:
+			colorDistribution = a1;
+			break;
+		case ColorSheme::rough:
+			colorDistribution = (abs((FPN)0.5 - b1 * 5 + (FPN)(unsigned)(b1 * 5)) + abs((FPN)0.5 - b2 * 5 + (FPN)(unsigned)(b2 * 5)) + abs((FPN)0.5 - b3 * 5 + (FPN)(unsigned)(b3 * 5))) / (FPN)1.5;
+			break;
+		default:
+			color = 0xFFB6C1FF;
+			break;
+		}
+		if (colorDistribution != -1)
 		{
 			//color = (unsigned)(a1 * (FPN)tetrahedron.colorization.color1 + (1 - a1) * (FPN)tetrahedron.colorization.color2); //Essentially what we want but becomes strange with float and unsigned and different channels owerflowing
-			unsigned color1Part = (unsigned)(a1 * 0x01000000u);
+			unsigned color1Part = (unsigned)(colorDistribution * 0x01000000u);
 			unsigned color2Part = 0x01000000u - color1Part;
 			color = 0x000000FFu |
 				(color1Part * (tetrahedron.colorization.color1 >> 8 & 0x000000FFu) + color2Part * (tetrahedron.colorization.color2 >> 8 & 0x000000FFu) >> 16 & 0x0000FF00u) +
 				(color1Part * (tetrahedron.colorization.color1 >> 16 & 0x000000FFu) + color2Part * (tetrahedron.colorization.color2 >> 16 & 0x000000FFu) >> 8 & 0x00FF0000u) +
 				(color1Part * (tetrahedron.colorization.color1 >> 24 & 0x000000FFu) + color2Part * (tetrahedron.colorization.color2 >> 24 & 0x000000FFu) & 0xFF000000u);
-		}
-			break;
-		default:
-			color = 0xFFB6C1FF;
-			break;
 		}
 	}
 }

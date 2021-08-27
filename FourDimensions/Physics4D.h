@@ -38,7 +38,7 @@ struct RayCastResult
 };
 enum class ColorSheme
 {
-	simple, dragedCubes, gradual
+	simple, dragedCubes, gradual, rough
 };
 struct Colorization
 {
