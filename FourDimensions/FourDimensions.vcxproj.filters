@@ -50,6 +50,12 @@
     <ClCompile Include="TestingWorld.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">
@@ -67,6 +73,9 @@
     <ClInclude Include="Linjear4D.h">
       <Filter>Linjear4D</Filter>
     </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Linjear4D">
@@ -77,6 +86,9 @@
     </Filter>
     <Filter Include="Other">
       <UniqueIdentifier>{979f3d78-05a8-439e-85fe-c4e74d6d7d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{00c17361-7673-45a8-8f6b-d4ad9644d2a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

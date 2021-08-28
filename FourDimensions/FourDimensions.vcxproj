@@ -92,17 +92,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="Linjear4D.h" />
     <ClInclude Include="Physics4D.h" />
     <ClInclude Include="RayCasting.cuh" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Colorization.cpp" />
     <ClCompile Include="Main.cpp">
       <FileType>Document</FileType>
     </ClCompile>
     <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MovingMesh.cpp" />
     <ClCompile Include="Player.cpp" />

@@ -8,11 +8,12 @@
 #include "Physics4D.h"
 #include "RayCasting.cuh"
 #include "World.h"
+#include "GUI.h"
 
 int main()
 {
-    TestingWorld world{ };
     sf::RenderWindow window(sf::VideoMode(1200, 1000), "4D-game", sf::Style::Titlebar | sf::Style::Close);
-    world.Run(window);
+    Menu startMenu{ Menu::GetStartMenu(window) };
+    startMenu.Run();
     return 0;
 }
