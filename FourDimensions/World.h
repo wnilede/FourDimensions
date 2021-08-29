@@ -68,3 +68,9 @@ struct TestingWorld : World
 	MovingMesh movingMesh{ Mesh::GetCube(Vector4{ }, Rotation{ }, 1, Colorization{ sf::Color::Yellow }), lifetimeClock, 1 };
 	MovingMesh elevator{ Mesh::GetCube(Vector4{ }, Rotation{ }, (FPN)2, Colorization{ ColorSheme::rough, 0x000000FFu, 0x808080FF }), lifetimeClock, 2 };
 };
+struct JumpTutorialWorld : World
+{
+	JumpTutorialWorld();
+	Space3D ground{ Vector4(0, 0, 0, 1), Vector4(), sf::Color::Green };
+	Mesh surroundingCube = Mesh::GetCube(Vector4(4, 4, 4, 4), Rotation(Vector4(0, 1, 0, 0), Vector4(0, 0, 1, 0), (FPN)constants::pi / 2), 4, Colorization(ColorSheme::gradual, sf::Color::Green, sf::Color::Blue));
+};

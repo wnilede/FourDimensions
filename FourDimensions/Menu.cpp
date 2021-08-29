@@ -46,11 +46,16 @@ Menu Menu::GetStartMenu(sf::RenderWindow& window)
     if (!font.loadFromFile("verdana.ttf")) {
         std::cout << "No font file found." << std::endl;
     }
-    Button TestingWorldButton(sf::Vector2f(0.5f, 0.5f), sf::Vector2f(0.2f, 0.2f), "Testing World"s, font, [](sf::RenderWindow& window){
+    Button TestingWorldButton(sf::Vector2f(0.5f, 0.4f), sf::Vector2f(0.3f, 0.1f), "Testing World"s, font, [](sf::RenderWindow& window) {
         TestingWorld world{ };
+        world.Run(window);
+    }, window);
+    Button JumpTutorialWorldButton(sf::Vector2f(0.5f, 0.6f), sf::Vector2f(0.3f, 0.1f), "Jump Turtorial World"s, font, [](sf::RenderWindow& window) {
+        JumpTutorialWorld world{ };
         world.Run(window);
     }, window);
     std::vector<Button> buttons;
     buttons.push_back(TestingWorldButton);
+    buttons.push_back(JumpTutorialWorldButton);
     return Menu{ buttons, window };
 }

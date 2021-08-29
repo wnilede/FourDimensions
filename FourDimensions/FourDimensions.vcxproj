@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Colorization.cpp" />
+    <ClCompile Include="JumpTutorialWorld.cpp" />
     <ClCompile Include="Main.cpp">
       <FileType>Document</FileType>
     </ClCompile>

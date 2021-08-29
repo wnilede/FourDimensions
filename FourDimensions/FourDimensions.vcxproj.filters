@@ -56,6 +56,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="JumpTutorialWorld.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">
