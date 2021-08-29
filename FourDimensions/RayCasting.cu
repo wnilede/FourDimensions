@@ -5,7 +5,7 @@
 #include <iostream>
 
 #pragma region RayCaster
-RayCaster::RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesMutex, const unsigned height, const unsigned width, std::atomic<bool>& lockTest) :
+RayCaster::RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesMutex, const unsigned height, const unsigned width) :
 	window(window), player(player), visibles(visibles), height(height), width(width), pixels(new sf::Uint8[width * height * 4]),
 	distance(height * width), color(height * width), pVisiblesImage(nullptr)
 {

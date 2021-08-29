@@ -31,10 +31,6 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     std::scoped_lock lock{ visiblesPlayerUpsMutex };
 
-    if (lockTest.load())
-        std::cout << "Lock is strange 2\n\r";
-    lockTest.store(true);
-
     sf::Time elapsedTime = physicsClock.restart();
     ups = elapsedTime;//(elapsedTime + ups) / (float)2;
     FPN mouseScroll = 0;
@@ -133,8 +129,6 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
         mouseMovement.x * mouseMoveSensitivity,
         -mouseMovement.y * mouseMoveSensitivity,
         -mouseScroll);
-
-    lockTest.store(false);
 }
 void World::StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
@@ -163,13 +157,8 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
         {
             sf::Clock clock;
             std::scoped_lock<std::mutex> lock{ visiblesPlayerUpsMutex };
-            if (lockTest.load())
-                std::cout << "Lock is strange 1\n\r";
-            lockTest = true;
-            //rayCaster.RayCastScreen();
             rayCaster.pVisiblesImage = new VisiblesImage(visibles, player);
             text.setString("FPS: " + std::to_string(1 / fps.asSeconds()) + "\n\rUPS: " + std::to_string(1 / ups.asSeconds()) + "\n\rLocked: " + std::to_string(clock.getElapsedTime().asSeconds()));
-            lockTest = false;
         }
         rayCaster.RayCastScreen();
         delete rayCaster.pVisiblesImage;
@@ -181,7 +170,7 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 }
 void World::Run(sf::RenderWindow& window)
 {
-    RayCaster rayCaster{ window, player, visibles, visiblesPlayerUpsMutex, window.getSize().y, window.getSize().x, lockTest };
+    RayCaster rayCaster{ window, player, visibles, visiblesPlayerUpsMutex, window.getSize().y, window.getSize().x };
 
     window.setMouseCursorGrabbed(true);
     window.setMouseCursorVisible(false);

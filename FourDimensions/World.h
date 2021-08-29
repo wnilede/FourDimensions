@@ -23,8 +23,6 @@ public:
 protected:
 	void SetGoalPosition(Vector4 position);
 private:
-	std::atomic<bool> lockTest = false;
-
 	SoundController soundController;
 	sf::Font font;
 	sf::Text text;

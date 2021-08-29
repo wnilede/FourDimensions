@@ -53,7 +53,7 @@ struct RayCaster
     const std::vector<Visible*>& visibles;
     const unsigned height;
     const unsigned width;
-    RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesPlayerUpsMutex, const unsigned height, const unsigned width, std::atomic<bool>& lockTest);
+    RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesPlayerUpsMutex, const unsigned height, const unsigned width);
     ~RayCaster();
     FPN RayCastCPU(Vector4 rayOrigin, Vector4 RayDirection);
     //Must be set before RayCastScreen() is called.
@@ -64,7 +64,4 @@ private:
     thrust::device_vector<FPN> distance;
     thrust::device_vector<unsigned> color;
     thrust::counting_iterator<unsigned> pixelIndex{ 0 };
-    //VisiblesImage visiblesImage;
-    //std::mutex& visiblesPlayerMutex;
-    //std::atomic<bool>& lockTest;
 };
