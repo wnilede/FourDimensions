@@ -72,5 +72,12 @@ struct JumpTutorialWorld : World
 {
 	JumpTutorialWorld();
 	Space3D ground{ Vector4(0, 0, 0, 1), Vector4(), sf::Color::Green };
-	Mesh surroundingCube = Mesh::GetCube(Vector4(4, 4, 4, 4), Rotation(Vector4(0, 1, 0, 0), Vector4(0, 0, 1, 0), (FPN)constants::pi / 2), 4, Colorization(ColorSheme::gradual, sf::Color::Green, sf::Color::Blue));
+	Mesh surroundingCube = Mesh::GetCuboid(Vector4(4, 4, 4, 8), Rotation(Vector4(0, 1, 0, 0), Vector4(0, 0, 1, 0), (FPN)constants::pi / 2), Vector4(8, 4, 4, 4), Colorization(ColorSheme::gradual, sf::Color::Green, sf::Color::Blue));
+	Mesh platform1 = Mesh::GetCuboid(Vector4(6, 1, 1, (FPN)0.8), Rotation{ }, Vector4(2, 1, 1, 1), Colorization(sf::Color::Black));
+	Mesh platform2 = Mesh::GetCube(Vector4(7, 3, 1, (FPN)2.6), Rotation{ }, 1, Colorization(sf::Color::Black));
+	Mesh platform3 = Mesh::GetCuboid(Vector4(7, 6, 1, (FPN)4.4), Rotation{ }, Vector4(1, 2, 1, 1), Colorization(sf::Color::Black));
+	Mesh platform4 = Mesh::GetCuboid(Vector4(3, 7, 1, (FPN)6.2), Rotation{ }, Vector4(3, 1, 1, 1), Colorization(sf::Color::Black));
+	Mesh platform5 = Mesh::GetCube(Vector4(1, 7, 3, 8), Rotation{ }, 1, Colorization(sf::Color::Black));
+	Mesh platform6 = Mesh::GetCuboid(Vector4(1, 7, 6, (FPN)9.8), Rotation{ }, Vector4(1, 1, 2, 1), Colorization(sf::Color::Black));
+	Mesh platform7 = Mesh::GetCuboid(Vector4(5, 7, 7, (FPN)11.6), Rotation{ }, Vector4(3, 1, 1, 1), Colorization(sf::Color::Black));
 };
