@@ -57,10 +57,17 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
             break;
 
         case sf::Event::KeyPressed:
-            if (event.key.code == sf::Keyboard::F2)
+            switch (event.key.code)
+            {
+            case sf::Keyboard::F2:
             {
                 std::scoped_lock<std::mutex> lock{ debugInfoMutex };
                 showDebugInfo = !showDebugInfo;
+            }
+                break;
+            case sf::Keyboard::Escape:
+                exiting = true;
+                break;
             }
             break;
 
@@ -133,7 +140,7 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
     }
 
     if ((goal.getPosition() - player.position).GetLength() < 3) {
-        closing = true;
+        exiting = true;
     }
 
     player.HandleViewControlls(
@@ -145,7 +152,7 @@ void World::StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     std::chrono::steady_clock::time_point lastUpdate = std::chrono::steady_clock::now();
     physicsClock.restart();
-    while (window.isOpen() && !closing)
+    while (window.isOpen() && !closing && !exiting)
     {
         //Sleep(max((targetUpdateInterval - physicsClock.getElapsedTime()).asMilliseconds(), 0));
         //std::this_thread::sleep_for(std::chrono::microseconds(max(((targetUpdateInterval - physicsClock.getElapsedTime()) * (float)0.7).asMicroseconds(), 0))); //Sleeps for some random amount of time perhaps close to the wanted one.
@@ -159,7 +166,7 @@ void World::StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 }
 void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
-    while (window.isOpen())
+    while (window.isOpen() && !exiting)
     {
         timePerFrame = graphicsClock.restart();
         window.clear();
@@ -198,4 +205,7 @@ void World::Run(sf::RenderWindow& window)
     });
     StartPhysicsLoop(window, rayCaster);
     drawThread.join();
+
+    window.setMouseCursorGrabbed(false);
+    window.setMouseCursorVisible(true);
 }

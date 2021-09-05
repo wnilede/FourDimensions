@@ -15,6 +15,7 @@ public:
 	FPN gravitationalAcceleration;
 	const sf::Time targetUpdateInterval = sf::seconds(1 / (FPN)60);
 	sf::Clock lifetimeClock;
+	std::atomic<bool> exiting = false;
 	std::atomic<bool> closing = false;
 	World();
 	World(World& other) = delete;
