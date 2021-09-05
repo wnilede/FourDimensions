@@ -5,7 +5,7 @@
 
 using namespace std::string_literals;
 
-Menu::Menu(std::vector<Button> buttons, sf::RenderWindow& window) : buttons(buttons), backgroundColor(sf::Color(10, 10, 200)), window(window)
+Menu::Menu(std::vector<Button> buttons, sf::RenderWindow& window) : buttons(buttons), backgroundColor(sf::Color(0, 0, 255)), window(window)
 { }
 void Menu::Run()
 {
@@ -33,7 +33,7 @@ void Menu::Run()
                 break;
             }
         }
-        window.clear();
+        window.clear(backgroundColor);
         for (const Button& button : buttons) {
             button.Draw();
         }
