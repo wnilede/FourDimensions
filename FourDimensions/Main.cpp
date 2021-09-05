@@ -14,6 +14,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 1000), "4D-game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
+    window.setKeyRepeatEnabled(false);
     Menu startMenu{ Menu::GetStartMenu(window) };
     startMenu.Run();
     return 0;

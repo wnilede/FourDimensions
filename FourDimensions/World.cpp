@@ -29,10 +29,13 @@ void World::SetGoalPosition(Vector4 position)
 }
 void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
 {
-    std::scoped_lock lock{ visiblesPlayerUpsMutex };
+    std::scoped_lock lock{ visiblesPlayerMutex };
 
     sf::Time elapsedTime = physicsClock.restart();
-    ups = elapsedTime;//(elapsedTime + ups) / (float)2;
+    {
+        std::scoped_lock<std::mutex> lock{ debugInfoMutex };
+        timePerUpdate = elapsedTime;
+    }
     FPN mouseScroll = 0;
     const sf::Vector2i centerOfScreen = sf::Vector2i(window.getSize().y / 2, window.getSize().x / 2);
     const sf::Vector2i mouseMovement = sf::Mouse::getPosition(window) - centerOfScreen;
@@ -51,6 +54,14 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
 
         case sf::Event::MouseWheelScrolled:
             mouseScroll += (FPN)event.mouseWheelScroll.delta * mouseScrollSensitivity;
+            break;
+
+        case sf::Event::KeyPressed:
+            if (event.key.code == sf::Keyboard::F2)
+            {
+                std::scoped_lock<std::mutex> lock{ debugInfoMutex };
+                showDebugInfo = !showDebugInfo;
+            }
             break;
 
         default:
@@ -150,19 +161,22 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 {
     while (window.isOpen())
     {
-        sf::Time elapsedTime = graphicsClock.restart();
-        fps = (elapsedTime + fps) / (float)2;
-        text.setFont(font);
+        timePerFrame = graphicsClock.restart();
         window.clear();
         {
-            sf::Clock clock;
-            std::scoped_lock<std::mutex> lock{ visiblesPlayerUpsMutex };
+            std::scoped_lock<std::mutex> lock{ visiblesPlayerMutex };
             rayCaster.pVisiblesImage = new VisiblesImage(visibles, player);
-            text.setString("FPS: " + std::to_string(1 / fps.asSeconds()) + "\n\rUPS: " + std::to_string(1 / ups.asSeconds()) + "\n\rLocked: " + std::to_string(clock.getElapsedTime().asSeconds()));
         }
         rayCaster.RayCastScreen();
         delete rayCaster.pVisiblesImage;
-        window.draw(text);
+        {
+            std::scoped_lock<std::mutex> lock{ debugInfoMutex };
+            if (showDebugInfo) {
+                text.setFont(font);
+                text.setString("FPS: " + std::to_string(1 / timePerFrame.asSeconds()) + "\n\rUPS: " + std::to_string(1 / timePerUpdate.asSeconds()));
+                window.draw(text);
+            }
+        }
         window.display();
         if (closing)
             window.close();
@@ -170,7 +184,7 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 }
 void World::Run(sf::RenderWindow& window)
 {
-    RayCaster rayCaster{ window, player, visibles, visiblesPlayerUpsMutex, window.getSize().y, window.getSize().x };
+    RayCaster rayCaster{ window, player, visibles, visiblesPlayerMutex, window.getSize().y, window.getSize().x };
 
     window.setMouseCursorGrabbed(true);
     window.setMouseCursorVisible(false);

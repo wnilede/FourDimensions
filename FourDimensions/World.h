@@ -23,14 +23,16 @@ public:
 protected:
 	void SetGoalPosition(Vector4 position);
 private:
+	bool showDebugInfo = false;
 	SoundController soundController;
 	sf::Font font;
 	sf::Text text;
 	sf::Clock physicsClock;
 	sf::Clock graphicsClock;
-	sf::Time fps;
-	sf::Time ups;
-	std::mutex visiblesPlayerUpsMutex;
+	sf::Time timePerFrame;
+	sf::Time timePerUpdate;
+	std::mutex visiblesPlayerMutex;
+	std::mutex debugInfoMutex;
 	RotatingMesh goal;
 	void StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster);
 	void StartPhysicsLoop(sf::RenderWindow& window, RayCaster& rayCaster);
