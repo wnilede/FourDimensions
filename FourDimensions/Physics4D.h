@@ -64,15 +64,19 @@ struct Space3D : Visible
 	Space3D(Vector4 norm, Vector4 position, sf::Color color);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 };
+enum class TetrahedronType
+{
+	Tetrahedron, Parallelepiped, Ramp
+};
 struct Tetrahedron : Visible
 {
 	Vector4 position;
 	Vector4 corners[3];
 	Colorization colorization;
-	bool actuallyParallelepiped = false;
+	TetrahedronType tetrahedronType;
 	static const int id = 2;
-	Tetrahedron(Vector4 corners[4], Colorization colorization, bool actuallyParallelepiped = false);
-	Tetrahedron(Vector4 corner1, Vector4 corner2, Vector4 corner3, Vector4 corner4, Colorization colorization, bool actuallyParallelepiped = false);
+	Tetrahedron(Vector4 corners[4], Colorization colorization, TetrahedronType tetrahedronType = TetrahedronType::Tetrahedron);
+	Tetrahedron(Vector4 corner1, Vector4 corner2, Vector4 corner3, Vector4 corner4, Colorization colorization, TetrahedronType tetrahedronType = TetrahedronType::Tetrahedron);
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 	Tetrahedron GetRotated(const Rotation rotation) const;
 	void Rotate(const Rotation rotation);
@@ -106,6 +110,8 @@ public:
 	FPN RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const;
 	static Mesh GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
 	static Mesh GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization);
+	//Creates ramp which becomes smaller in the x and y directions. Cuboid cut in half by plane orthogonal to (y-size, x-size, 0, 0).
+	static Mesh GetRamp(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization);
 };
 struct RotatingMesh : Mesh, Updatable
 {

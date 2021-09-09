@@ -34,7 +34,7 @@ namespace TestFourDimensions
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });
 			Tetrahedron parallelepiped{
 				Vector4{ -100, -100, 1, -100 }, Vector4{ 100, -100, 1, -100 }, Vector4{ -100, 100, 1, -100 }, Vector4{ -100, -100, 1, 100 },
-				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, true };
+				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, TetrahedronType::Parallelepiped };
 			FPN parallelepipedDistance = parallelepiped.RayCast(
 				Vector4{ (FPN)0.609922, (FPN)5.498534, (FPN)-5.969094, (FPN)1.700000 },
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });
@@ -48,7 +48,7 @@ namespace TestFourDimensions
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });
 			Tetrahedron parallelepiped{
 				Vector4{ -100, -100, 0, -100 }, Vector4{ 100, -100, 0, -100 }, Vector4{ -100, 100, 0, -100 }, Vector4{ -100, -100, 0, 100 },
-				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, true };
+				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, TetrahedronType::Parallelepiped };
 			FPN parallelepipedDistance = parallelepiped.RayCast(
 				Vector4{ (FPN)0.609922, (FPN)5.498534, (FPN)-5.969094, (FPN)1.700000 },
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });
@@ -62,7 +62,7 @@ namespace TestFourDimensions
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });
 			Tetrahedron parallelepiped{
 				Vector4{ 2, 8, -2, 4 }, Vector4{ -2, 8, -2, 4 }, Vector4{ 2, 4, -2, 4 }, Vector4{ 2, 8, -2, 0 },
-				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, true };
+				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, TetrahedronType::Parallelepiped };
 			FPN parallelepipedDistance = parallelepiped.RayCast(
 				Vector4{ (FPN)0.609922, (FPN)5.498534, (FPN)-5.969094, (FPN)1.700000 },
 				Vector4{ (FPN)-0.057880, (FPN)0.048593, (FPN)0.484171, (FPN)-0.099335 });

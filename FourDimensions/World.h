@@ -48,7 +48,7 @@ struct TestingWorld : World
 	Tetrahedron tetrahedron1{ Vector4(-1, 1, 1, 1), Vector4(1, 1, -1, 1), Vector4(1, 1, 1, -1), Vector4(-1, 1, -1, -1), Colorization(ColorSheme::simple, sf::Color::Black, sf::Color::Black) };
 	Tetrahedron tetrahedron2{ Vector4(2, 11, 1, 1), Vector4(1, 11, 2, 1), Vector4(1, 11, 1, -1), Vector4(-1, 11, 2, -1), Colorization(ColorSheme::simple, sf::Color::White, sf::Color::White) };
 	Tetrahedron tetrahedron3{ Vector4(-1, 1, 11, 1), Vector4(1, 1, 9, 1), Vector4(1, 1, 11, -1), Vector4(-1, 1, 9, -1), Colorization(ColorSheme::simple, sf::Color::Magenta, sf::Color::Magenta) };
-	Tetrahedron parallelepepid{ Vector4(2, 0, 0, 2), Vector4(3, 0, 0, 2), Vector4(2, 1, 0, 2), Vector4(2, 0, 1, 2), Colorization(ColorSheme::simple, sf::Color::Cyan, sf::Color::Cyan), true };
+	Tetrahedron parallelepepid{ Vector4(2, 0, 0, 2), Vector4(3, 0, 0, 2), Vector4(2, 1, 0, 2), Vector4(2, 0, 1, 2), Colorization(ColorSheme::simple, sf::Color::Cyan, sf::Color::Cyan), TetrahedronType::Parallelepiped };
 	Mesh cube4D = Mesh::GetCube(Vector4(0, 3, 0, 1), Rotation{}, 1, Colorization(ColorSheme::rough, sf::Color(160, 160, 160), sf::Color(150, 150, 150)));
 	Mesh cube4D2 = Mesh::GetCube(Vector4(0, 6, 0, 0),
 		Rotation{ Vector4{ 0, 0, 0, 1 }, Vector4{ 0, 1, 0, 0 }, (FPN)constants::pi / 4 },
@@ -70,6 +70,7 @@ struct TestingWorld : World
 		lifetimeClock, Vector4{ 1, 0, 0, 0 }, Vector4{ 0, 0, 1, 0 }, (FPN)constants::pi / 4 };
 	MovingMesh movingMesh{ Mesh::GetCube(Vector4{ }, Rotation{ }, 1, Colorization{ sf::Color::Yellow }), lifetimeClock, 1 };
 	MovingMesh elevator{ Mesh::GetCube(Vector4{ }, Rotation{ }, (FPN)2, Colorization{ ColorSheme::rough, 0x000000FFu, 0x808080FF }), lifetimeClock, 2 };
+	Mesh ramp{ Mesh::GetRamp(Vector4{ 20, -2, 4, 0 }, Rotation{ }, Vector4{ 2, 2, 2, 2 }, Colorization{ ColorSheme::dragedCubes, sf::Color::White, sf::Color::Black}) };
 };
 struct JumpTutorialWorld : World
 {

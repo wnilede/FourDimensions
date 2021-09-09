@@ -263,8 +263,9 @@ void RayCasterTetrahedronFunctor::operator()(const unsigned& i, FPN& distance, u
 
 	if (currentDistance >= 0 && currentDistance < distance &&
 		a1 >= 0 && a2 >= 0 && a3 >= 0 && (
-		!tetrahedron.actuallyParallelepiped && a1 + a2 + a3 <= 1 ||
-		tetrahedron.actuallyParallelepiped && a1 <= 1 && a2 <= 1 && a3 <= 1))
+			tetrahedron.tetrahedronType == TetrahedronType::Tetrahedron && a1 + a2 + a3 <= 1 ||
+			tetrahedron.tetrahedronType == TetrahedronType::Ramp && a1 + a2 <= 1 && a3 <= 1 ||
+			tetrahedron.tetrahedronType == TetrahedronType::Parallelepiped && a1 <= 1 && a2 <= 1 && a3 <= 1))
 	{
 		distance = currentDistance;
 		FPN colorDistribution = -1;

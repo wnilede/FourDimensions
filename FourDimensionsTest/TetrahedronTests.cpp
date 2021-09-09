@@ -55,7 +55,7 @@ namespace TestFourDimensions
 
 			Tetrahedron tetrahedron{
 				Vector4{ 2, 8, -2, 4 }, Vector4{ -2, 8, -2, 4 }, Vector4{ 2, 4, -2, 4 }, Vector4{ 2, 8, -2, 0 },
-				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, true };
+				Colorization{ColorSheme::dragedCubes, sf::Color::Black, sf::Color::White}, TetrahedronType::Parallelepiped };
 			FPN tetrahedronDistance = tetrahedron.RayCast(position, screenCenter);
 
 			const unsigned screenWidth = 1200;

@@ -75,49 +75,49 @@ Mesh Mesh::GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Coloriza
 		Vector4(-size.X, size.Y, size.Z, size.W),
 		Vector4(size.X, -size.Y, size.Z, size.W),
 		Vector4(size.X, size.Y, -size.Z, size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, size.Y, size.Z, -size.W),
 		Vector4(-size.X, size.Y, size.Z, -size.W),
 		Vector4(size.X, -size.Y, size.Z, -size.W),
 		Vector4(size.X, size.Y, -size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, size.Y, size.Z, size.W),
 		Vector4(-size.X, size.Y, size.Z, size.W),
 		Vector4(size.X, -size.Y, size.Z, size.W),
 		Vector4(size.X, size.Y, size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, size.Y, -size.Z, size.W),
 		Vector4(-size.X, size.Y, -size.Z, size.W),
 		Vector4(size.X, -size.Y, -size.Z, size.W),
 		Vector4(size.X, size.Y, -size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, size.Y, size.Z, size.W),
 		Vector4(-size.X, size.Y, size.Z, size.W),
 		Vector4(size.X, size.Y, -size.Z, size.W),
 		Vector4(size.X, size.Y, size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, -size.Y, size.Z, size.W),
 		Vector4(-size.X, -size.Y, size.Z, size.W),
 		Vector4(size.X, -size.Y, -size.Z, size.W),
 		Vector4(size.X, -size.Y, size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(size.X, size.Y, size.Z, size.W),
 		Vector4(size.X, -size.Y, size.Z, size.W),
 		Vector4(size.X, size.Y, -size.Z, size.W),
 		Vector4(size.X, size.Y, size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	tetrahedrons.push_back(Tetrahedron(
 		Vector4(-size.X, size.Y, size.Z, size.W),
 		Vector4(-size.X, -size.Y, size.Z, size.W),
 		Vector4(-size.X, size.Y, -size.Z, size.W),
 		Vector4(-size.X, size.Y, size.Z, -size.W),
-		colorization, true));
+		colorization, TetrahedronType::Parallelepiped));
 	switch (colorization.colorScheme)
 	{
 	case ColorSheme::gradual:
@@ -130,4 +130,51 @@ Mesh Mesh::GetCuboid(Vector4 position, Rotation rotation, Vector4 size, Coloriza
 Mesh Mesh::GetCube(Vector4 position, Rotation rotation, FPN size, Colorization colorization)
 {
 	return GetCuboid(position, rotation, Vector4{ size, size, size, size }, colorization);
+}
+Mesh Mesh::GetRamp(Vector4 position, Rotation rotation, Vector4 size, Colorization colorization)
+{
+	std::vector<Tetrahedron> tetrahedrons{};
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, 0, 0),
+		Vector4(size.X, 0, 0, 0),
+		Vector4(0, size.Y, 0, 0),
+		Vector4(0, 0, size.Z, 0),
+		colorization, TetrahedronType::Ramp));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, 0, size.W),
+		Vector4(size.X, 0, 0, size.W),
+		Vector4(0, size.Y, 0, size.W),
+		Vector4(0, 0, size.Z, size.W),
+		colorization, TetrahedronType::Ramp));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, 0, 0),
+		Vector4(size.X, 0, 0, 0),
+		Vector4(0, size.Y, 0, 0),
+		Vector4(0, 0, 0, size.W),
+		colorization, TetrahedronType::Ramp));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, size.Z, 0),
+		Vector4(size.X, 0, size.Z, 0),
+		Vector4(0, size.Y, size.Z, 0),
+		Vector4(0, 0, size.Z, size.W),
+		colorization, TetrahedronType::Ramp));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, 0, 0),
+		Vector4(size.X, 0, 0, 0),
+		Vector4(0, 0, size.Z, 0),
+		Vector4(0, 0, 0, size.W),
+		colorization, TetrahedronType::Parallelepiped));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(0, 0, 0, 0),
+		Vector4(0, size.Y, 0, 0),
+		Vector4(0, 0, size.Z, 0),
+		Vector4(0, 0, 0, size.W),
+		colorization, TetrahedronType::Parallelepiped));
+	tetrahedrons.push_back(Tetrahedron(
+		Vector4(size.X, 0, 0, 0),
+		Vector4(size.X, 0, size.Z, 0),
+		Vector4(size.X, 0, 0, size.W),
+		Vector4(0, size.Y, 0, 0),
+		colorization, TetrahedronType::Parallelepiped));
+	return Mesh{ position, rotation, tetrahedrons };
 }
