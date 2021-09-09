@@ -2,6 +2,8 @@
 #include <chrono>
 #include <windows.h>
 #include <processthreadsapi.h>
+#include <locale>
+#include <codecvt>
 
 #include "World.h"
 
@@ -170,20 +172,26 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
     {
         timePerFrame = graphicsClock.restart();
         window.clear();
+        VisiblesImage* pVisiblesImage;
         {
             std::scoped_lock<std::mutex> lock{ visiblesPlayerMutex };
-            rayCaster.pVisiblesImage = new VisiblesImage(visibles, player);
+            pVisiblesImage = new VisiblesImage(visibles, player);
         }
+        rayCaster.pVisiblesImage = pVisiblesImage;
         rayCaster.RayCastScreen();
-        delete rayCaster.pVisiblesImage;
         {
             std::scoped_lock<std::mutex> lock{ debugInfoMutex };
             if (showDebugInfo) {
                 text.setFont(font);
-                text.setString("FPS: " + std::to_string(1 / timePerFrame.asSeconds()) + "\n\rUPS: " + std::to_string(1 / timePerUpdate.asSeconds()));
+                text.setString(L"FPS: " + std::to_wstring(1 / timePerFrame.asSeconds()) +
+                    L"\n\rUPS: " + std::to_wstring(1 / timePerUpdate.asSeconds()).c_str() +
+                    L"\n\rPosition: " + ToString(pVisiblesImage->player.position).c_str() +
+                    L"\n\rVertical speed: " + std::to_wstring(pVisiblesImage->player.verticalSpeed) +
+                    L"\n\rLooking: " + ToString(pVisiblesImage->player.GetScreenCenter().GetNormalized()));
                 window.draw(text);
             }
         }
+        delete pVisiblesImage;
         window.display();
         if (closing)
             window.close();
