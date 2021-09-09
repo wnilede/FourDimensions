@@ -21,6 +21,7 @@ World::World() :
     }
     text.setCharacterSize(16);
     text.setFillColor(sf::Color::White);
+    text.setPosition(sf::Vector2f(6, 6));
 
     visibles.push_back(&goal);
     updatables.push_back(&goal);
@@ -188,6 +189,10 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
                     L"\n\rPosition: " + ToString(pVisiblesImage->player.position).c_str() +
                     L"\n\rVertical speed: " + std::to_wstring(pVisiblesImage->player.verticalSpeed) +
                     L"\n\rLooking: " + ToString(pVisiblesImage->player.GetScreenCenter().GetNormalized()));
+                sf::RectangleShape textBackground(sf::Vector2f(text.getGlobalBounds().width + 16, text.getGlobalBounds().height + 16));
+                textBackground.setFillColor(sf::Color(0, 0, 0, 70));
+                textBackground.setPosition(sf::Vector2f(text.getGlobalBounds().left - 8, text.getGlobalBounds().top - 10));
+                window.draw(textBackground);
                 window.draw(text);
             }
         }
