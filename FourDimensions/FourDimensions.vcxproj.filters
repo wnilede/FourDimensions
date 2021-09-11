@@ -25,9 +25,6 @@
     <ClCompile Include="Visible.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Physics4D</Filter>
-    </ClCompile>
     <ClCompile Include="SoundController.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
@@ -46,25 +43,27 @@
     <ClCompile Include="RotatingMesh.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
-    <ClCompile Include="MovingMesh.cpp" />
-    <ClCompile Include="TestingWorld.cpp">
-      <Filter>Physics4D</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Worlds</Filter>
+    </ClCompile>
+    <ClCompile Include="TestingWorld.cpp">
+      <Filter>Worlds</Filter>
+    </ClCompile>
     <ClCompile Include="JumpTutorialWorld.cpp">
+      <Filter>Worlds</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingMesh.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">
-      <Filter>Physics4D</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
       <Filter>Physics4D</Filter>
     </ClInclude>
     <ClInclude Include="RayCasting.cuh">
@@ -79,6 +78,9 @@
     <ClInclude Include="GUI.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Worlds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Linjear4D">
@@ -92,6 +94,9 @@
     </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{00c17361-7673-45a8-8f6b-d4ad9644d2a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Worlds">
+      <UniqueIdentifier>{67ef6408-1e82-4953-9885-c9c1ab13169f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
