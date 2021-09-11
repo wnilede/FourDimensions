@@ -61,6 +61,9 @@
     <ClCompile Include="MovingMesh.cpp">
       <Filter>Physics4D</Filter>
     </ClCompile>
+    <ClCompile Include="RayCast.cpp">
+      <Filter>Physics4D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Physics4D.h">

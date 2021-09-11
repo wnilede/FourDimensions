@@ -168,3 +168,4 @@ struct VisiblesImage
 	VisiblesImage(VisiblesImage&&) = delete;
 	~VisiblesImage();
 };
+FPN RayCast(std::vector<Visible*>& visibles, Vector4 rayOrigin, Vector4 RayDirection);

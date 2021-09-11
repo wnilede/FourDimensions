@@ -119,7 +119,7 @@ void World::UpdatePhysics(sf::RenderWindow& window, RayCaster& rayCaster)
     Vector4 hitVector{ 1, 2, 3, 4 };
     FPN minDistance = std::numeric_limits<FPN>().infinity();
     for (const Vector4& vector : player.shape) {
-        FPN distance = rayCaster.RayCastCPU(player.position, vector) - vector.GetLength();
+        FPN distance = RayCast(visibles, player.position, vector) - vector.GetLength();
         if (distance < minDistance) {
             minDistance = distance;
             hitVector = vector;
