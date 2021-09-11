@@ -18,8 +18,9 @@ Tetrahedron::Tetrahedron(Vector4 corner1, Vector4 corner2, Vector4 corner3, Vect
 }
 FPN Tetrahedron::RayCast(const Vector4& RayOrigin, const Vector4& RayDirection) const
 {
-	Vector4 result = Matrix4{ corners[0], corners[1], corners[2], RayDirection.GetNormalized() }.Invers() * (RayOrigin - position);
-	if (result[0] >= 0 && result[1] >= 0 && result[2] >= 0 && (
+	FPN conditionNumber;
+	Vector4 result = Matrix4{ corners[0], corners[1], corners[2], RayDirection.GetNormalized() }.Invers(conditionNumber) * (RayOrigin - position);
+	if (conditionNumber < 100000 && result[0] >= 0 && result[1] >= 0 && result[2] >= 0 && (
 		tetrahedronType == TetrahedronType::Tetrahedron && result[0] + result[1] + result[2] <= 1 ||
 		tetrahedronType == TetrahedronType::Ramp && result[0] + result[1] <= 1 && result[2] <= 1 ||
 		tetrahedronType == TetrahedronType::Parallelepiped && result[0] <= 1 && result[1] <= 1 && result[2] <= 1))

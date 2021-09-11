@@ -54,7 +54,9 @@ struct Matrix4
 	Matrix4 operator*(const Matrix4& other) const;
 	Vector4 operator*(const Vector4& vector4) const;
 	Matrix4 Invers() const;
+	Matrix4 Invers(FPN& conditionNumber) const;
 	Matrix4 Transpose() const;
+	FPN AbsoluteNorm() const;
 	static Matrix4 Identity();
 	FPN Determinant() const;
 };

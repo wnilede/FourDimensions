@@ -123,26 +123,25 @@ Matrix4 Matrix4::Invers() const
 	//Make it lower triangular
 	for (unsigned q = 3; q >= 1; q--)
 	{
-		if (clone.values[q][q] == 0)
+		unsigned bestRow = q;
+		for (int i = q - 1; i >= 0; i--)
 		{
-			for (int i = q - 1; i >= 0; i--)
+			if (std::abs(clone.values[i][q]) >= std::abs(clone.values[bestRow][q]))
 			{
-				if (clone.values[i][q] != 0)
-				{
-					//Switches rows i and q
-					for (unsigned p = 0; p < 4; p++)
-					{
-						FPN temp = clone.values[q][p];
-						clone.values[q][p] = clone.values[i][p];
-						clone.values[i][p] = temp;
-						temp = inverse[q][p];
-						inverse[q][p] = inverse[i][p];
-						inverse[i][p] = temp;
-					}
-					break;
-				}
+				bestRow = i;
 			}
 		}
+		//Switch row q and bestRow
+		for (unsigned p = 0; p < 4; p++)
+		{
+			FPN temp = clone.values[q][p];
+			clone.values[q][p] = clone.values[bestRow][p];
+			clone.values[bestRow][p] = temp;
+			temp = inverse[q][p];
+			inverse[q][p] = inverse[bestRow][p];
+			inverse[bestRow][p] = temp;
+		}
+		//Make column q zero above row q
 		for (unsigned i = 0; i < q; i++)
 		{
 			FPN scalar = clone.values[i][q] / clone.values[q][q];
@@ -180,6 +179,12 @@ Matrix4 Matrix4::Invers() const
 	}
 	return Matrix4(inverse);
 }
+Matrix4 Matrix4::Invers(FPN& conditionNumber) const
+{
+	Matrix4& inverse = Invers();
+	conditionNumber = AbsoluteNorm() * inverse.AbsoluteNorm();
+	return inverse;
+}
 Matrix4 Matrix4::Transpose() const
 {
 	FPN inside[4][4];
@@ -191,6 +196,18 @@ Matrix4 Matrix4::Transpose() const
 		}
 	}
 	return Matrix4{ inside };
+}
+FPN Matrix4::AbsoluteNorm() const
+{
+	FPN max = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int q = 0; q < 4; q++)
+		{
+			max = std::max(max, std::abs(values[i][q]));
+		}
+	}
+	return max;
 }
 Matrix4 Matrix4::Identity()
 {
