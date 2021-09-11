@@ -6,7 +6,7 @@ namespace Comparers
 	void AssertAlmostSame(const FPN expected, const FPN actual)
 	{
 		Assert::IsTrue(abs((double)(expected - actual)) < 0.1,
-			(L"Expected value " + std::to_wstring(expected) + L" with actual value " + std::to_wstring(actual)).c_str());
+			(L"Expected value " + std::to_wstring(expected) + L" with actual value " + std::to_wstring(actual) + L".").c_str());
 	}
 	void AssertAlmostSame(const Vector4 expected, const Vector4 actual)
 	{
