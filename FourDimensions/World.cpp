@@ -204,7 +204,7 @@ void World::StartDrawLoop(sf::RenderWindow& window, RayCaster& rayCaster)
 }
 void World::Run(sf::RenderWindow& window)
 {
-    RayCaster rayCaster{ window, player, visibles, visiblesPlayerMutex, window.getSize().y, window.getSize().x };
+    RayCaster rayCaster{ window };
 
     window.setMouseCursorGrabbed(true);
     window.setMouseCursorVisible(false);

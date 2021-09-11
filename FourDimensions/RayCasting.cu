@@ -5,8 +5,8 @@
 #include <iostream>
 
 #pragma region RayCaster
-RayCaster::RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesMutex, const unsigned height, const unsigned width) :
-	window(window), player(player), visibles(visibles), height(height), width(width), pixels(new sf::Uint8[width * height * 4]),
+RayCaster::RayCaster(sf::RenderWindow& window) :
+	window(window), width(window.getSize().x), height(window.getSize().y), pixels(new sf::Uint8[width * height * 4]),
 	distance(height * width), color(height * width), pVisiblesImage(nullptr)
 {
 	texture.create(width, height);
@@ -77,29 +77,6 @@ void RayCaster::RayCastScreen()
 	}
 	texture.update(pixels); //Very slow, but do not know how to make faster
 	window.draw(sprite);
-}
-FPN RayCaster::RayCastCPU(Vector4 rayOrigin, Vector4 RayDirection)
-{
-	FPN closestDistance = std::numeric_limits<FPN>::infinity();
-	for (Visible* visible : visibles)
-	{
-		FPN distance;
-		switch (visible->id)
-		{
-		case Space3D::id:
-			distance = static_cast<Space3D*>(visible)->RayCast(rayOrigin, RayDirection);
-			break;
-		case Tetrahedron::id:
-			distance = static_cast<Tetrahedron*>(visible)->RayCast(rayOrigin, RayDirection);
-			break;
-		case Mesh::id:
-			distance = static_cast<Mesh*>(visible)->RayCast(rayOrigin, RayDirection);
-			break;
-		}
-		if (distance >= 0 && distance < closestDistance)
-			closestDistance = distance;
-	}
-	return closestDistance;
 }
 #pragma endregion
 

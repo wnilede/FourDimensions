@@ -45,23 +45,20 @@ struct RayCasterTetrahedronFunctor : RayCasterFunctor
 };
 struct RayCaster
 {
-    sf::RenderWindow& window;
-    sf::Uint8* pixels;
-    sf::Texture texture;
-    sf::Sprite sprite;
-    const Player& player;
-    const std::vector<Visible*>& visibles;
-    const unsigned height;
-    const unsigned width;
-    RayCaster(sf::RenderWindow& window, const Player& player, const std::vector<Visible*>& visibles, std::mutex& visiblesPlayerUpsMutex, const unsigned height, const unsigned width);
+    RayCaster(sf::RenderWindow& window);
     ~RayCaster();
-    FPN RayCastCPU(Vector4 rayOrigin, Vector4 RayDirection);
     //Must be set before RayCastScreen() is called.
     VisiblesImage* pVisiblesImage;
     //Should be called after pVisiblesImage is set.
     void RayCastScreen();
 private:
+    sf::RenderWindow& window;
+    const unsigned height;
+    const unsigned width;
+    sf::Uint8* const pixels;
+    sf::Texture texture;
+    sf::Sprite sprite;
     thrust::device_vector<FPN> distance;
     thrust::device_vector<unsigned> color;
-    thrust::counting_iterator<unsigned> pixelIndex{ 0 };
+    const thrust::counting_iterator<unsigned> pixelIndex{ 0 };
 };
